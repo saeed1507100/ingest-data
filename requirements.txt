@@ -4,3 +4,4 @@ kaggle==1.5.12
 google-cloud-bigquery==3.5.0
 pymongo==4.4.1
 psycopg2==2.9.6
+flask==2.3.2
