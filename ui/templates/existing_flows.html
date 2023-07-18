@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Run Script Web UI</title>
+</head>
+<body>
+  <h1>Run Script</h1>
+  <button onclick="runScript()">Run Script</button>
+
+  <div id="output"></div>
+
+  <script>
+    function runScript() {
+      // Clear previous output
+      document.getElementById("output").innerHTML = "";
+
+      // Send a request to the server to run the Python script
+      fetch('/run_script')
+        .then(response => {
+          // Read and display the output incrementally
+          const reader = response.body.getReader();
+          let result = '';
+
+          function processChunk({ done, value }) {
+            if (done) {
+              // Handle the completion of the script execution
+              console.log("Script execution complete");
+              return;
+            }
+
+            // Convert the received chunk to a string
+            const chunk = new TextDecoder("utf-8").decode(value);
+
+            // Append the chunk to the output
+            result += chunk;
+
+            // Replace line breaks with HTML line break tags
+            const formattedOutput = result.replace(/\n/g, "<br>");
+
+            // Update the UI with the new output
+            document.getElementById("output").innerHTML = formattedOutput;
+
+            // Continue processing the next chunk
+            return reader.read().then(processChunk);
+          }
+
+          return reader.read().then(processChunk);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  </script>
+</body>
+</html>
