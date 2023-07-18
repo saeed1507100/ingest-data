@@ -6,10 +6,32 @@ from ui.src.insert_data_endpoint import insert_data_endpoint
 app = Flask(__name__)
 
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/existing_flows')
+def existing_flows():
+    return render_template('existing_flows.html')
+
+
+@app.route('/add_flow')
+def add_flow():
+    return render_template('add_flow.html')
+
+
+@app.route('/add_endpoint')
+def add_endpoint():
+    return render_template('add_endpoint.html')
+
+
+# Handle the data insertion request
+@app.route('/add_endpoint', methods=['POST'])
+def insert_data_to_mongodb():
+    insert_data_endpoint()
+
+    return render_template('add_endpoint.html', message='Data inserted successfully!')
 
 
 @app.route('/run_script')

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Insert Data</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      display: grid;
+      gap: 10px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #f7f7f7;
+      border-radius: 5px;
+      /* Add padding-right to input fields */
+      margine-right: 20px;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #feda4a;
+    }
+    select {
+      appearance: none;
+      padding-right: 30px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23feda4a' d='M6 9L1.07 4h9.86L6 9z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+    }
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Insert Data</h1>
+    <form action="/add_endpoint" method="POST">
+      <label for="type">Type:</label>
+      <select id="type" name="type">
+        <option value="kaggle">Kaggle</option>
+        <option value="postgres">Postgres</option>
+      </select>
+
+      <label for="owner">Owner:</label>
+      <input type="text" id="owner" name="owner">
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+
+      <label for="host">Host:</label>
+      <input type="text" id="host" name="host">
+
+      <label for="port">Port:</label>
+      <input type="number" id="port" name="port">
+
+      <label for="database">Database:</label>
+      <input type="text" id="database" name="database">
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+</html>

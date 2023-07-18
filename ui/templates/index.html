@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Run Script Web UI</title>
+  <title>Landing Page</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      color: #777;
+      margin-bottom: 20px;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .options a {
+      text-decoration: none;
+      display: inline-block;
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .options a:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h1>Run Script</h1>
-  <button onclick="runScript()">Run Script</button>
+  <div class="container">
+    <h1>Welcome to the App!</h1>
+    <p>This is a brief introduction about the app.</p>
 
-  <div id="output"></div>
-
-  <script>
-    function runScript() {
-      // Clear previous output
-      document.getElementById("output").innerHTML = "";
-
-      // Send a request to the server to run the Python script
-      fetch('/run_script')
-        .then(response => {
-          // Read and display the output incrementally
-          const reader = response.body.getReader();
-          let result = '';
-
-          function processChunk({ done, value }) {
-            if (done) {
-              // Handle the completion of the script execution
-              console.log("Script execution complete");
-              return;
-            }
-
-            // Convert the received chunk to a string
-            const chunk = new TextDecoder("utf-8").decode(value);
-
-            // Append the chunk to the output
-            result += chunk;
-
-            // Replace line breaks with HTML line break tags
-            const formattedOutput = result.replace(/\n/g, "<br>");
-
-            // Update the UI with the new output
-            document.getElementById("output").innerHTML = formattedOutput;
-
-            // Continue processing the next chunk
-            return reader.read().then(processChunk);
-          }
-
-          return reader.read().then(processChunk);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
-  </script>
+    <h2>Choose an option:</h2>
+    <div class="options">
+      <a href="/existing_flows">Existing Data Ingestion flows</a>
+      <a href="/add_flow">Add a Data Ingestion flow</a>
+      <a href="/add_endpoint">Add a Data Endpoint</a>
+    </div>
+  </div>
 </body>
 </html>
