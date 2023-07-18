@@ -1,10 +1,8 @@
-from flask import Flask, render_template, Response, request
-
-from ui.src.execution import run_script_generator
-from ui.src.insert_data_endpoint import insert_data_endpoint
+from flask import Flask, render_template, Response
+import subprocess
 
 app = Flask(__name__)
-
+SCRIPT_PATH = '/Users/saeed.anwar/Projects/ingest-data/app/test_data_integration.py'
 
 @app.route('/')
 def index():
@@ -36,22 +34,16 @@ def insert_data_to_mongodb():
 
 @app.route('/run_script')
 def run_script():
+    def run_script_generator():
+        # Code to run your Python script
+        process = subprocess.Popen(['python', SCRIPT_PATH], stdout=subprocess.PIPE,
+                                   universal_newlines=True)
+
+        # Read and yield each line of the script output
+        for line in process.stdout:
+            yield line
+
     return Response(run_script_generator(), mimetype='text/plain')
-
-
-# Insert Data page
-@app.route('/insert')
-def insert_data():
-    return render_template('insert_data_endpoints.html')
-
-
-# Handle the data insertion request
-@app.route('/insert', methods=['POST'])
-def insert_data_to_mongodb():
-
-    insert_data_endpoint()
-
-    return render_template('insert_data_endpoints.html', message='Data inserted successfully!')
 
 
 if __name__ == '__main__':

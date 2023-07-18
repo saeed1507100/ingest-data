@@ -1,17 +1,16 @@
 from app.extractors.data_extraction import extractor
 from app.loaders.data_load import loader
 from pymongo.mongo_client import MongoClient
-from ui.src.constants import MONGO_URI, DB_NAME, CONFIGURATION_COLLECTION
 
 QUERY = "SELECT * FROM `bigquery-public-data.covid19_nyt.us_states` where date='2020-10-01'"
 FILE_NAME = "covid19_us_states_20201001.csv"
 
 
 def get_config():
-    uri = MONGO_URI
+    uri = "MONGODB_URI"
     client = MongoClient(uri)
-    db = client[DB_NAME]
-    config = db[CONFIGURATION_COLLECTION].find()
+    db = client['configdb']
+    config = db['integration_configuration'].find()
     return config
 
 
